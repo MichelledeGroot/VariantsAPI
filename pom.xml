@@ -15,18 +15,14 @@
 	<description>Pathogenic variants filter API</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.11</java.version>
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 
