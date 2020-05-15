@@ -22,17 +22,8 @@ public class MongoConnector {
 
     @Bean
     public void MongoClientConnector() {
-        String user = "JMT"; // the user name
-        String databasename = "variantsaapies"; // the name of the database in which the user is defined
-        String password = "variantsaapies"; //password
-        char[] passwordArray = password.toCharArray();
-        //logger.info("Connecting to database");
-
-        MongoCredential credential = MongoCredential.createCredential(user, databasename, passwordArray);
-        MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017),
-                                                    Arrays.asList(credential));
-        //TODO: Method is deprecated, find other way for credentials
-        MongoDatabase database = mongoClient.getDatabase(databasename);
+        MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+        MongoDatabase database = mongoClient.getDatabase("variantsdatabase");
         for (String name : database.listCollectionNames()) {
             System.out.println(name);
         }
