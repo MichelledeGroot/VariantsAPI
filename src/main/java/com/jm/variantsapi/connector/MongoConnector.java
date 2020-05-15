@@ -25,7 +25,7 @@ public class MongoConnector {
         MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
         MongoDatabase database = mongoClient.getDatabase("variantsdatabase");
         for (String name : database.listCollectionNames()) {
-            System.out.println(name);
+            System.out.println("Collection name: \u001B[34m"+name+"\u001B[0m");
         }
     }
 
