@@ -3,12 +3,12 @@ services:
     database: 
         image: mongo
         container_name: "mongodb-container"
-        environment:
-          - MONGO_INITDB_DATABASE=variantsaapies
-          - MONGO_INITDB_ROOT_USERNAME=JKM
-          - MONGO_INITDB_ROOT_PASSWORD=variantsaapies
+        #environment:
+        #  - MONGO_INITDB_DATABASE=variantsaapies
+        #  - MONGO_INITDB_ROOT_USERNAME=JKM
+        #  - MONGO_INITDB_ROOT_PASSWORD=variantsaapies
         volumes:
-         - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
          - ./mongo-volume:/data/db
         ports:
          - 27017:27017
