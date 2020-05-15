@@ -27,3 +27,6 @@ hs_err_pid*
 
 #Springboot target
 target/
+
+#MONGO
+mongo-volume/
