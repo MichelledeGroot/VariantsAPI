@@ -16,3 +16,9 @@ services:
          - 8080:8080
         depends_on:
          - database
+         - makedatabase
+    makedatabase:
+        build: makedatabase/.
+        container_name: vcf_to_db
+        depends_on:
+         - database

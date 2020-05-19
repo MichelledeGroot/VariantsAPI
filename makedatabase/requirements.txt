@@ -1,0 +1,2 @@
+pymongo==3.10.1
+setuptools==46.2.0
