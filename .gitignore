@@ -23,10 +23,17 @@
 hs_err_pid*
 
 #IntelliJ IDEA
-.idea/
+api/.idea/
 
 #Springboot target
-target/
+api/target/
 
 #MONGO
-mongo-volume/
+api/mongo-volume/
+
+#idea
+makedatabase/.idea/
+makedatabase/venv/
+
+#VCF files
+makedatabase/Resources/
