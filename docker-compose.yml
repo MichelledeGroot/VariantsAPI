@@ -3,14 +3,16 @@ services:
     database: 
         image: mongo
         container_name: "mongodb-container"
-        #environment:
-        #  - MONGO_INITDB_DATABASE=variantsaapies
-        #  - MONGO_INITDB_ROOT_USERNAME=JKM
-        #  - MONGO_INITDB_ROOT_PASSWORD=variantsaapies
         volumes:
-        # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-         - ./mongo-volume:/data/db
+         - ./api/mongo-volume:/data/db
         ports:
          - 27017:27017
-        #command: mongod --smallfiles --logpath=/dev/null # --quiet
-        #command: mongod --quiet "printjson(db.adminCommand('listDatabases'))"
+    api:
+        build: api/.
+        container_name: spring_docker
+        environment:
+         - MONGODB_STATUS_HOST=database
+        ports:
+         - 8080:8080
+        depends_on:
+         - database
