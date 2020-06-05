@@ -47,6 +47,6 @@ def check_pathogenic(info):
 
     if allele_frequency > 1:
         return False
-    elif non_cancer_frequency > 0:
+    elif non_cancer_frequency > 0: #non_cancer frequency >0 --> variant present in non_cancer group
         return False
     return True
