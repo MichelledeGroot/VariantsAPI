@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MongoConnector {
 
     static MongoCollection<Document> variantsColl;
-    final Logger logger = LoggerFactory.getLogger(MongoConnector.class);
+    final static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
 
     public static ArrayList<String> getVariantFromDatabase(String chromosome, String position){
         BasicDBObject query = new BasicDBObject("Position", position);
