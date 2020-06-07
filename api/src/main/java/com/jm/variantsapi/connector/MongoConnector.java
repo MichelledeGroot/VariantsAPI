@@ -22,6 +22,13 @@ public class MongoConnector {
     static MongoCollection<Document> variantsColl;
     final static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
 
+    /**
+     * Uses chromosome and position to retrieve variants from the possible pathogenic MongoDB
+     *
+     * @param chromosome Chromosome of the variant
+     * @param position Position of the variant
+     * @return ArrayList with possible pathogenic variants from the MongoDB
+     */
     public static ArrayList<String> getVariantFromDatabase(String chromosome, String position){
         BasicDBObject query = new BasicDBObject("Position", position);
         query.put("Chromosome", chromosome);
@@ -36,6 +43,10 @@ public class MongoConnector {
         return results;
     }
 
+    /**
+     * MongoDB connector
+     * Makes a connection to the database on startup of the application
+     */
     @Bean
     public void MongoClientConnector() {
         try {

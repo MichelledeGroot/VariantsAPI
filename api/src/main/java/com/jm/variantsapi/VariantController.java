@@ -13,27 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.io.IOException;
 import java.util.stream.Collectors;
 
 /**
-@RestController
-public class VariantController {
-
-    final Logger logger = LoggerFactory.getLogger(VariantController.class);
-
-    @GetMapping(value = "/")
-    public String index(@RequestParam(value = "chromosome", defaultValue = "") String chromosome,
-                        @RequestParam(value = "position", defaultValue = "") String position) {
-        ArrayList<String> variantsList = MongoConnector.getVariantFromDatabase(chromosome, position);
-        if (variantsList.size() == 0) {
-            return "No possible pathogenic variants for this position";
-        } else {
-            return String.join("\n", variantsList);
-        }
-    }
-}
- **/
+ * Controller for the API
+ *
+ */
 @Controller
 public class VariantController {
 
@@ -68,7 +53,6 @@ public class VariantController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    Model model) {
 
-        //MultipartFile annotatedFile = VariantsFilter.createAnnotatedFile(file);
         storageService.store(VariantsFilter.createAnnotatedFile(file));
         model.addAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
