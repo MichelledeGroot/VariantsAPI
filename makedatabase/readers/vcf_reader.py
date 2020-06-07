@@ -29,7 +29,6 @@ def convert_file_to_variants(file):
             variant = {"Chromosome": line[0], "Position": line[1], "variant_id": line[2],
                        "Reference": line[3], "Alternate": line[4], "Info": info}
             variants.append(variant)
-            #variants.append(Variant(line[0], line[1], line[2], line[3], line[4], info))
 
     return variants
 
