@@ -40,12 +40,15 @@ def check_pathogenic(info):
     '''
     try:
         allele_frequency = float(info['AF'])
-        non_cancer_frequency = float(info["non_cancer_AF"])
+        allele_count = float(info['AC'])
+        non_cancer_ac = float(info["non_cancer_AC"])
     except KeyError: #Allele frequency or non_cancer allele frequency is not known
         return False
 
-    if allele_frequency > 1:
+    if allele_frequency > 0.01:
+        #allele frequency is higher than 1% --> deemed benign
         return False
-    elif non_cancer_frequency > 0: #non_cancer frequency >0 --> variant present in non_cancer group
+    elif allele_count - non_cancer_ac == 0:
+        #allele_count - non_cancer ac (=cancer_ac) >0 --> variant present in cancer group
         return False
     return True

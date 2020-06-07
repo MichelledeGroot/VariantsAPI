@@ -66,7 +66,8 @@ public class VariantsFilter {
         String chromosome = columns[0];
         String position = columns[1];
         ArrayList<String> variantsList = MongoConnector.getVariantFromDatabase(chromosome, position);
-        System.out.println(variantsList.size());
+        logger.info(variantsList.toString());
+        //System.out.println(variantsList.size());
         if (variantsList.size() == 0){
             return line+"\tbenign\n";
         } else {
