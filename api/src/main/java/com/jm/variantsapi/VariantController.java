@@ -69,7 +69,7 @@ public class VariantController {
                                    Model model) {
 
         //MultipartFile annotatedFile = VariantsFilter.createAnnotatedFile(file);
-        storageService.store(file);
+        storageService.store(VariantsFilter.createAnnotatedFile(file));
         model.addAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 

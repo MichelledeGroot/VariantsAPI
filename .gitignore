@@ -37,3 +37,7 @@ makedatabase/venv/
 
 #VCF files
 makedatabase/Resources/
+
+#Irrelevant files
+testfile.tsv
+api/testfile.tsv

@@ -8,37 +8,37 @@ import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Scanner; // Import the Scanner class to read text files
+import java.util.List;
 
 public class VariantsFilter {
 
     static final Logger logger = LoggerFactory.getLogger(VariantsFilter.class);
 
     public static MultipartFile createAnnotatedFile(MultipartFile variantsFile){
+        logger.info("Reading file: "+variantsFile.getOriginalFilename());
+        String variantsList = readAndAnnotateMultiPartFile(variantsFile);
+        String annotatedName = FilenameUtils.removeExtension(variantsFile.getOriginalFilename()) + "_annotated";
+        String annotatedFileName = annotatedName+".tsv";
+        logger.info("Wrote annotations to: " + annotatedFileName);
+        return new MockMultipartFile(annotatedName, annotatedFileName, "text/plain", variantsList.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private static String readAndAnnotateMultiPartFile(MultipartFile variantsFile) {
+        BufferedReader br;
+        StringBuilder result = new StringBuilder("");
         try {
-            logger.info("Reading file: "+variantsFile.getOriginalFilename());
-            String annotatedFileName = FilenameUtils.removeExtension(variantsFile.getOriginalFilename()) + "_annotated.tsv";
-            File annotatedFile = new File(annotatedFileName);
-            annotatedFile.createNewFile();
-            Scanner myReader = new Scanner(convertMultipartToFile(variantsFile));
-            while (myReader.hasNextLine()) {
-                String line = myReader.nextLine();
-                System.out.println(line);
-                String annotatedLine = annotateLine(line);
-                Files.write(Paths.get(String.valueOf(annotatedFile)), annotatedLine.getBytes(), StandardOpenOption.APPEND);
+            String line;
+            InputStream is = variantsFile.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                result.append(annotateLine(line));
             }
-            myReader.close();
-            logger.info("Wrote annotations to: " + annotatedFileName);
-            return new MockMultipartFile(annotatedFileName, new FileInputStream(annotatedFile));
         } catch ( IOException e ) {
-            logger.error("An error occurred.");
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
-        return null;
+        return result.toString();
     }
 
     private static String annotateLine(String line){
@@ -48,9 +48,9 @@ public class VariantsFilter {
         ArrayList<String> variantsList = MongoConnector.getVariantFromDatabase(chromosome, position);
         System.out.println(variantsList.size());
         if (variantsList.size() == 0){
-            return line+"\tbenign";
+            return line+"\tbenign\n";
         } else {
-            return line+"\tpathogenic";
+            return line+"\tpathogenic\n";
         }
     }
 
@@ -62,4 +62,5 @@ public class VariantsFilter {
         fos.close();
         return convFile;
     }
+
 }
