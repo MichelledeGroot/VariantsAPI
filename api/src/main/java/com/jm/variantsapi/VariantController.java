@@ -1,8 +1,12 @@
 package com.jm.variantsapi;
 
+import com.jm.variantsapi.connector.MongoConnector;
 import com.jm.variantsapi.filters.VariantsFilter;
+import com.jm.variantsapi.storage.StorageException;
 import com.jm.variantsapi.storage.StorageFileNotFoundException;
 import com.jm.variantsapi.storage.StorageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 public class VariantController {
 
     private final StorageService storageService;
+    final Logger logger = LoggerFactory.getLogger(VariantController.class);
 
     @Autowired
     public VariantController(StorageService storageService) {
@@ -56,7 +61,12 @@ public class VariantController {
 
         MockMultipartFile[] resultFiles = VariantsFilter.createAnnotatedFile(file);
         storageService.store(resultFiles[0]);
-        storageService.store(resultFiles[1]);
+        try {
+            storageService.store(resultFiles[1]);
+        } catch ( StorageException ex ){
+            logger.warn("Empty JSON file");
+        }
+
         model.addAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 

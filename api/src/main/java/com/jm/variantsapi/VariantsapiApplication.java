@@ -20,7 +20,7 @@ import com.jm.variantsapi.storage.StorageService;
  * @version 1.0
  * @date 7/6/2020
  */
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@SpringBootApplication()
 public class VariantsapiApplication {
 
     final Logger logger = LoggerFactory.getLogger(VariantsapiApplication.class);

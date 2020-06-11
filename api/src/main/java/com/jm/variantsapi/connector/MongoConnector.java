@@ -9,15 +9,19 @@ import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 
+@EnableAutoConfiguration
 @Configuration
 public class MongoConnector {
 
-    static MongoCollection<Document> variantsColl;
+    private static MongoCollection<Document> variantsColl;
+
     final static Logger logger = LoggerFactory.getLogger(MongoConnector.class);
 
     /**
@@ -38,6 +42,8 @@ public class MongoConnector {
             while(cursor.hasNext()) {
                 results.add(cursor.next().toJson());
             }
+        } catch ( NullPointerException ex ){
+            logger.warn("Database is empty or failed to load");
         }
         return results;
     }
@@ -48,6 +54,7 @@ public class MongoConnector {
      */
     @Bean
     public void MongoClientConnector() {
+        logger.error("help");
         try {
             MongoClient mongoClient = new MongoClient("database", 27017);
             MongoDatabase database = mongoClient.getDatabase("variantsdatabase");
