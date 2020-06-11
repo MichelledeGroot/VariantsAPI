@@ -2,7 +2,6 @@ package com.jm.variantsapi.connector;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
-
 
 @Configuration
 public class MongoConnector {
@@ -31,10 +29,11 @@ public class MongoConnector {
      */
     public static ArrayList<String> getVariantFromDatabase(String chromosome, String position){
         BasicDBObject query = new BasicDBObject("Position", position);
-        query.put("Chromosome", chromosome);
+        query.put("Chromosome", chromosome);;
         ArrayList<String> results = new ArrayList();
-        try (MongoCursor<Document> cursor = variantsColl.find(query).projection(Projections
-                .include("Chromosome", "Position", " variant_id", "Reference", "Alternate"))
+        try (MongoCursor<Document> cursor = variantsColl.find(query).projection(Projections.fields(
+                Projections.include("Chromosome", "Position", " variant_id", "Reference", "Alternate"),
+                Projections.excludeId()))
                 .iterator()) {
             while(cursor.hasNext()) {
                 results.add(cursor.next().toJson());
@@ -54,7 +53,6 @@ public class MongoConnector {
             MongoDatabase database = mongoClient.getDatabase("variantsdatabase");
             for (String name : database.listCollectionNames()) {
                 variantsColl = database.getCollection(name);
-                FindIterable<Document> variants = variantsColl.find();
                 logger.info("Collection name: \u001B[34m" + name + "\u001B[0m");
             }
         } catch ( Exception e ) {

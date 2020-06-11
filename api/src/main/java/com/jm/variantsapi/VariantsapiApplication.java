@@ -13,6 +13,9 @@ import com.jm.variantsapi.storage.StorageService;
 /**
  * Main class for running the spring application
  *
+ * This application can create a JSON file and an annotated tsv file based on a tsv file with
+ * chromosomes and positions. The variants in tje JSON file can be used for further research
+ *
  * @author Michelle de Groot, Joshua Koopmans
  * @version 1.0
  * @date 7/6/2020

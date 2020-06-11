@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,9 @@ public class VariantController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    Model model) {
 
-        storageService.store(VariantsFilter.createAnnotatedFile(file));
+        MockMultipartFile[] resultFiles = VariantsFilter.createAnnotatedFile(file);
+        storageService.store(resultFiles[0]);
+        storageService.store(resultFiles[1]);
         model.addAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
