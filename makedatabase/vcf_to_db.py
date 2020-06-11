@@ -4,7 +4,7 @@ VCF to MongoDB
 This script uses the exomes VCF file form gnomAD: https://gnomad.broadinstitute.org/downloads
 to filter out benign variants and add the possible pathogenic variants to a Mongo Database
 A variants is considered benign when it occurs in  more than 1 percent of the population
-and is not present in patients with cancer (AF > 0.01 & cancer_AC > 0)
+and is not present in patients with cancer (AF > 0.01 & cancer_AC == 0)
 """
 
 from readers import vcf_reader

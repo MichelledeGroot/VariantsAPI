@@ -49,6 +49,7 @@ def check_pathogenic(info):
         #allele frequency is higher than 1% --> deemed benign
         return False
     elif allele_count - non_cancer_ac == 0:
-        #allele_count - non_cancer ac (=cancer_ac) >0 --> variant present in cancer group
+        #allele_count - non_cancer ac (=cancer_ac) == 0 --> variant not present in cancer group
+        # --> deemed benign
         return False
     return True

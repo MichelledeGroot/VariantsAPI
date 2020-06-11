@@ -40,4 +40,5 @@ makedatabase/Resources/
 
 #Irrelevant files
 testfile.tsv
+testfilemini.tsv
 api/testfile.tsv
